@@ -39,7 +39,7 @@ slapp.message('help', ['mention', 'direct_message'], (msg) => {
 
 // "Conversation" flow that tracks state - kicks off when user says hi, hello or hey
 slapp
-  .message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, text) => {
+  .message('^(hi|hello|hey)$', ['bot_message','direct_mention', 'direct_message'], (msg, text) => {
     msg
       .say(otherBot+` ${text}, how are you?`)
       // sends next event from user to this route, passing along state
@@ -83,7 +83,7 @@ slapp
   })
 
 // Can use a regex as well
-slapp.message(/^(thanks|thank you)/i, ['mention', 'direct_message'], (msg) => {
+slapp.message(/^(thanks|thank you)/i, ['bot_message', 'mention', 'direct_message'], (msg) => {
   // You can provide a list of responses, and a random one will be chosen
   // You can also include slack emoji in your responses
   msg.say([
@@ -95,7 +95,7 @@ slapp.message(/^(thanks|thank you)/i, ['mention', 'direct_message'], (msg) => {
 })
 
 // demonstrate returning an attachment...
-slapp.message('attachment', ['mention', 'direct_message'], (msg) => {
+slapp.message('attachment', ['bot_message','mention', 'direct_message'], (msg) => {
   msg.say({
     text: 'Check out this amazing attachment! :confetti_ball: ',
     attachments: [{
@@ -110,7 +110,7 @@ slapp.message('attachment', ['mention', 'direct_message'], (msg) => {
 })
 
 // Catch-all for any other responses not handled above
-slapp.message('/royalsbot1/i', ['direct_mention', 'direct_message'], (msg) => {
+slapp.message('/royalsbot1/i', ['bot_message','direct_mention', 'direct_message'], (msg) => {
   // respond only 40% of the time
 	msg.say('you called?');
   
@@ -118,7 +118,7 @@ slapp.message('/royalsbot1/i', ['direct_mention', 'direct_message'], (msg) => {
 
 
 // Catch-all for any other responses not handled above
-slapp.message('.*', ['direct_mention', 'direct_message'], (msg) => {
+slapp.message('.*', ['bot_message','direct_mention', 'direct_message'], (msg) => {
   // respond only 40% of the time
   if (Math.random() < 0.4) {
     msg.say([':wave:', ':pray:', ':raised_hands:'])
