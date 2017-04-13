@@ -5,6 +5,8 @@ const Slapp = require('slapp')
 const ConvoStore = require('slapp-convo-beepboop')
 const Context = require('slapp-context-beepboop')
 
+const otherBot = "<!royalsbot2>";
+
 // use `PORT` env var on Beep Boop - default to 3000 locally
 var port = process.env.PORT || 3000
 
@@ -38,7 +40,7 @@ slapp.message('help', ['mention', 'direct_message'], (msg) => {
 slapp
   .message('^(hi|hello|hey)$', ['direct_mention', 'direct_message'], (msg, text) => {
     msg
-      .say(`@royalsbot2 ${text}, how are you?`)
+      .say(otherBot+` ${text}, how are you?`)
       // sends next event from user to this route, passing along state
       .route('how-are-you', { greeting: text })
   })
@@ -48,8 +50,8 @@ slapp
     // user may not have typed text as their next action, ask again and re-route
     if (!text) {
       return msg
-        .say({text:"Whoops, I'm still waiting to hear how you're doing.",thread_ts: msg.body.event.ts})
-        .say({text:'How are you?',thread_ts: msg.body.event.ts})
+        .say({text:otherBot + " Whoops, I'm still waiting to hear how you're doing."})
+        .say({text:otherBot + ' How are you?'})
         .route('how-are-you', state)
     }
 
@@ -57,7 +59,7 @@ slapp
     state.status = text
 
     msg
-      .say({text:`Ok then. What's your favorite color?`,thread_ts: msg.body.event.ts})
+      .say({text:otherBot + ` Ok then. What's your favorite color?`})
       .route('color', state)
   })
   .route('color', (msg, state) => {
@@ -66,7 +68,7 @@ slapp
     // user may not have typed text as their next action, ask again and re-route
     if (!text) {
       return msg
-        .say({text:"I'm eagerly awaiting to hear your favorite color.",thread_ts: msg.body.event.ts})
+        .say({text:otherBot + " I'm eagerly awaiting to hear your favorite color."})
         .route('color', state)
     }
 
@@ -74,8 +76,8 @@ slapp
     state.color = text
 
     msg
-      .say({text:'Thanks for sharing.',thread_ts: msg.body.event.ts})
-      .say(`Here's what you've told me so far: \`\`\`${JSON.stringify(state)}\`\`\``)
+      .say({text:otherBot + ' Thanks for sharing.'})
+      .say(otherBot + `Here's what you've told me so far: \`\`\`${JSON.stringify(state)}\`\`\``)
     // At this point, since we don't route anywhere, the "conversation" is over
   })
 
@@ -84,10 +86,10 @@ slapp.message(/^(thanks|thank you)/i, ['mention', 'direct_message'], (msg) => {
   // You can provide a list of responses, and a random one will be chosen
   // You can also include slack emoji in your responses
   msg.say([
-	  {text:"You're welcome :smile:",thread_ts: msg.body.event.ts},
-	  {text:'You bet',thread_ts: msg.body.event.ts},
-	  {text:':+1: Of course',thread_ts: msg.body.event.ts},
-	  {text:'Anytime :sun_with_face: :full_moon_with_face:',thread_ts: msg.body.event.ts}
+	  {text:otherBot + " You're welcome :smile:"},
+	  {text:otherBot + ' You bet'},
+	  {text:otherBot + ' :+1: Of course'},
+	  {text:otherBot + ' Anytime :sun_with_face: :full_moon_with_face:'}
   ])
 })
 
