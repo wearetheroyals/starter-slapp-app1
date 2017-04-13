@@ -57,7 +57,7 @@ slapp
     state.status = text
 
     msg
-      .say(`@royalsbot2 Ok then. What's your favorite color?`)
+      .say({text:`Ok then. What's your favorite color?` + msg.body.event.ts})
       .route('color', state)
   })
   .route('color', (msg, state) => {
