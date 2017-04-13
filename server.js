@@ -48,8 +48,8 @@ slapp
     // user may not have typed text as their next action, ask again and re-route
     if (!text) {
       return msg
-        .say("@royalsbot2 Whoops, I'm still waiting to hear how you're doing.")
-        .say('@royalsbot2 How are you?')
+        .say({text:"Whoops, I'm still waiting to hear how you're doing." + text.ts})
+        .say({text:'How are you?'})
         .route('how-are-you', state)
     }
 
