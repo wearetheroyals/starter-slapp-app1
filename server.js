@@ -110,7 +110,7 @@ slapp.message('attachment', ['mention', 'direct_message'], (msg) => {
 })
 
 // Catch-all for any other responses not handled above
-slapp.message(myName, ['direct_mention', 'direct_message'], (msg) => {
+slapp.message('/'+myName+'/i', ['direct_mention', 'direct_message'], (msg) => {
   // respond only 40% of the time
 	msg.say('you called?');
   
