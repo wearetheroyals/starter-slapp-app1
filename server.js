@@ -5,7 +5,7 @@ const Slapp = require('slapp')
 const ConvoStore = require('slapp-convo-beepboop')
 const Context = require('slapp-context-beepboop')
 
-const otherBot = "<@A4Y0WSSTV>";
+const otherBot = "<@A4Y0WSSTV|royalsbot2>";
 
 // use `PORT` env var on Beep Boop - default to 3000 locally
 var port = process.env.PORT || 3000
@@ -59,7 +59,7 @@ slapp
     state.status = text
 
     msg
-      .say({text:otherBot + ` Ok then. What's your favorite color?`})
+      .say({text:otherBot + ` Ok then. What's your favorite color?`,"link_names":"1"})
       .route('color', state)
   })
   .route('color', (msg, state) => {
@@ -68,7 +68,7 @@ slapp
     // user may not have typed text as their next action, ask again and re-route
     if (!text) {
       return msg
-        .say({text:otherBot + " I'm eagerly awaiting to hear your favorite color."})
+        .say({text:otherBot + " I'm eagerly awaiting to hear your favorite color.","link_names":"1"})
         .route('color', state)
     }
 
@@ -76,8 +76,8 @@ slapp
     state.color = text
 
     msg
-      .say({text:otherBot + ' Thanks for sharing.'})
-      .say(otherBot + `Here's what you've told me so far: \`\`\`${JSON.stringify(state)}\`\`\``)
+      .say({text:otherBot + ' Thanks for sharing.',"link_names":"1"})
+      .say({text:otherBot + `Here's what you've told me so far: \`\`\`${JSON.stringify(state)}\`\`\``,"link_names":"1"})
     // At this point, since we don't route anywhere, the "conversation" is over
   })
 
@@ -86,10 +86,10 @@ slapp.message(/^(thanks|thank you)/i, ['mention', 'direct_message'], (msg) => {
   // You can provide a list of responses, and a random one will be chosen
   // You can also include slack emoji in your responses
   msg.say([
-	  {text:otherBot + " You're welcome :smile:"},
-	  {text:otherBot + ' You bet'},
-	  {text:otherBot + ' :+1: Of course'},
-	  {text:otherBot + ' Anytime :sun_with_face: :full_moon_with_face:'}
+	  {text:otherBot + " You're welcome :smile:","link_names":"1"},
+	  {text:otherBot + ' You bet',"link_names":"1"},
+	  {text:otherBot + ' :+1: Of course',"link_names":"1"},
+	  {text:otherBot + ' Anytime :sun_with_face: :full_moon_with_face:',"link_names":"1"}
   ])
 })
 
@@ -104,7 +104,7 @@ slapp.message('attachment', ['mention', 'direct_message'], (msg) => {
       title_link: 'https://beepboophq.com/',
       color: '#7CD197'
     }],
-    thread_ts: msg.body.event.ts
+    "link_names":"1"
   })
 })
 
