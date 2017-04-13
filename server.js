@@ -66,7 +66,7 @@ slapp
     // user may not have typed text as their next action, ask again and re-route
     if (!text) {
       return msg
-        .say("@royalsbot2 I'm eagerly awaiting to hear your favorite color.")
+        .say("I'm eagerly awaiting to hear your favorite color.")
         .route('color', state)
     }
 
@@ -74,7 +74,7 @@ slapp
     state.color = text
 
     msg
-      .say('@royalsbot2 Thanks for sharing.')
+      .say({text:'Thanks for sharing.'+msg.body.event.ts})
       .say(`@royalsbot2 Here's what you've told me so far: \`\`\`${JSON.stringify(state)}\`\`\``)
     // At this point, since we don't route anywhere, the "conversation" is over
   })
