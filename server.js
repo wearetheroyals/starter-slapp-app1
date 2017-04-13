@@ -6,6 +6,7 @@ const ConvoStore = require('slapp-convo-beepboop')
 const Context = require('slapp-context-beepboop')
 
 const otherBot = "<@A4Y0WSSTV|royalsbot2>";
+const myName = "royalsbot1";
 
 // use `PORT` env var on Beep Boop - default to 3000 locally
 var port = process.env.PORT || 3000
@@ -107,6 +108,14 @@ slapp.message('attachment', ['mention', 'direct_message'], (msg) => {
     "link_names":"1"
   })
 })
+
+// Catch-all for any other responses not handled above
+slapp.message('^'+myName+'$', ['direct_mention', 'direct_message'], (msg) => {
+  // respond only 40% of the time
+	msg.say('you called?');
+  
+})
+
 
 // Catch-all for any other responses not handled above
 slapp.message('.*', ['direct_mention', 'direct_message'], (msg) => {
