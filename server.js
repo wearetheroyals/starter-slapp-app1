@@ -48,8 +48,8 @@ slapp
     // user may not have typed text as their next action, ask again and re-route
     if (!text) {
       return msg
-        .say({text:"Whoops, I'm still waiting to hear how you're doing." + text.ts})
-        .say({text:'How are you?'})
+        .say({text:"Whoops, I'm still waiting to hear how you're doing.",thread_ts: msg.body.event.ts})
+        .say({text:'How are you?',thread_ts: msg.body.event.ts})
         .route('how-are-you', state)
     }
 
@@ -57,7 +57,7 @@ slapp
     state.status = text
 
     msg
-      .say({text:`Ok then. What's your favorite color?` + msg.body.event.ts})
+      .say({text:`Ok then. What's your favorite color?`,thread_ts: msg.body.event.ts})
       .route('color', state)
   })
   .route('color', (msg, state) => {
@@ -66,7 +66,7 @@ slapp
     // user may not have typed text as their next action, ask again and re-route
     if (!text) {
       return msg
-        .say("I'm eagerly awaiting to hear your favorite color.")
+        .say({text:"I'm eagerly awaiting to hear your favorite color.",thread_ts: msg.body.event.ts})
         .route('color', state)
     }
 
@@ -74,8 +74,8 @@ slapp
     state.color = text
 
     msg
-      .say({text:'Thanks for sharing.'+msg.body.event.ts})
-      .say(`@royalsbot2 Here's what you've told me so far: \`\`\`${JSON.stringify(state)}\`\`\``)
+      .say({text:'Thanks for sharing.',thread_ts: msg.body.event.ts})
+      .say(`Here's what you've told me so far: \`\`\`${JSON.stringify(state)}\`\`\``)
     // At this point, since we don't route anywhere, the "conversation" is over
   })
 
@@ -84,24 +84,25 @@ slapp.message(/^(thanks|thank you)/i, ['mention', 'direct_message'], (msg) => {
   // You can provide a list of responses, and a random one will be chosen
   // You can also include slack emoji in your responses
   msg.say([
-    "@royalsbot2 You're welcome :smile:",
-    '@royalsbot2 You bet',
-    '@royalsbot2 :+1: Of course',
-    '@royalsbot2 Anytime :sun_with_face: :full_moon_with_face:'
+	  {text:"You're welcome :smile:",thread_ts: msg.body.event.ts},
+	  {text:'You bet',thread_ts: msg.body.event.ts},
+	  {text:':+1: Of course',thread_ts: msg.body.event.ts},
+	  {text:'Anytime :sun_with_face: :full_moon_with_face:',thread_ts: msg.body.event.ts}
   ])
 })
 
 // demonstrate returning an attachment...
 slapp.message('attachment', ['mention', 'direct_message'], (msg) => {
   msg.say({
-    text: '@royalsbot2 Check out this amazing attachment! :confetti_ball: ',
+    text: 'Check out this amazing attachment! :confetti_ball: ',
     attachments: [{
-      text: '@royalsbot2 Slapp is a robust open source library that sits on top of the Slack APIs',
-      title: '@royalsbot2 Slapp Library - Open Source',
+      text: 'Slapp is a robust open source library that sits on top of the Slack APIs',
+      title: 'Slapp Library - Open Source',
       image_url: 'https://storage.googleapis.com/beepboophq/_assets/bot-1.22f6fb.png',
       title_link: 'https://beepboophq.com/',
       color: '#7CD197'
-    }]
+    }],
+    thread_ts: msg.body.event.ts
   })
 })
 
